@@ -1,16 +1,14 @@
-language : php
+language: php
 
-php : 
-  - 7.3
-  - 7.4
+php:
+  - 8.0
 
-os : windows 
-
-before_script : 
-  - composer install
+before_script:
+  - travis_retry composer self-update
+  - travis_retry composer install --prefer-source --no-interaction
+  - travis_retry composer update
   - cp .env.example .env
   - php artisan key:generate
-  - php artisan jwt:secret
 
-script :
+script:
   - vendor/bin/phpunit
